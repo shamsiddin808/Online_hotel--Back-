@@ -58,17 +58,12 @@ class RoomBookingAPIView(APIView):
         check_out = request.data.get('check_out')
         hotel_name = Hotel.objects.filter(id=hotel_id).first()
         try:
-            print("True 1")
             pass
         except hotel_name.DoesNotExist:
             return Response({'HATO': 'Mehmonhona mavjud emas'}, status=400)
 
 
-        bookings = TemporaryBusyroomsModel.objects.filter(
-            hotel=hotel_name, room_number=room_number,
-            check_in__lt=check_out, check_out__gt=check_in
-        )
-        print("True 2")
+        bookings = TemporaryBusyroomsModel.objects.filter(hotel=hotel_name, room_number=room_number, check_in__lt=check_out, check_out__gt=check_in)
 
         if bookings.exists():
             return Response({"message": "bu hona band"}, status=400)
@@ -78,3 +73,4 @@ class RoomBookingAPIView(APIView):
             serializer.save(user=user, hotel=hotel_name)
             return Response({"message": "Hona muvofaqiyatli band qildik"}, status=201)
         return Response(serializer.errors, status=400)
+
