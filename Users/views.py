@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
+from django.core.mail import send_mail
+
 
 from .models import UserModel, Hotel, TemporaryBusyroomsModel
 from .serializers import UserSerializer, UserLoginSerializer, HotelSerializer, RoomSerializer
@@ -74,3 +76,20 @@ class RoomBookingAPIView(APIView):
             return Response({"message": "Hona muvofaqiyatli band qildik"}, status=201)
         return Response(serializer.errors, status=400)
 
+
+class SendEmailView(APIView):
+    def post(self, request):
+        recipient_email = request.data.get("email")  # Kimga yuborishni olish
+        verification_code = "123456"  # Bu yerda kod yaratishingiz mumkin
+
+        # Email jo'natish
+        subject = "Tasdiqlash Kodi"
+        message = f"Sizning tasdiqlash kodingiz: {verification_code}"
+        from_email = "ultrateam050@gmail.com"
+        recipient_list = [recipient_email]
+
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+            return Response({"success": "Kod muvaffaqiyatli yuborildi!"}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)

@@ -113,6 +113,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True  # TLS qo'llab-quvvatlash
+EMAIL_HOST = 'smtp.gmail.com'  # Gmail SMTP serveri
+EMAIL_PORT = 587  # SMTP port
+EMAIL_HOST_USER = 'ultrateam050@gmail.com'  # Sizning email manzilingiz
+EMAIL_HOST_PASSWORD = 'shamsiddin00011209'  # Email parolingiz yoki App Password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
