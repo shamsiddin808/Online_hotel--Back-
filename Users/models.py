@@ -1,3 +1,5 @@
+from sys import maxsize
+
 from django.db import models
 
 class UserModel(models.Model):
@@ -23,6 +25,13 @@ class Hotel(models.Model):
     def __str__(self):
         return self.hotel_name
 
+class TgUsersModel(models.Model):
+    name = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    user_id = models.IntegerField()
+    def __str__(self):
+        return f'{self.user_id}, {self.name}'
+
+
 
 class TemporaryBusyroomsModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
@@ -37,3 +46,4 @@ class TemporaryBusyroomsModel(models.Model):
 
     class Meta:
         unique_together = ('user', 'hotel', 'room_number', 'check_in', 'check_out')
+
